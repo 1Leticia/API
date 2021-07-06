@@ -1,0 +1,146 @@
+<div class="container p-5" *ngIf="visibilidadeTabela">
+    <div class="border boder-light rounded p-5">
+      <div>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="ExibirFormularioCadastro()">
+          Novo Endereço
+        </button>
+      </div>
+  
+      <hr />
+  
+      <table class="table table-striped table-hover table-sm" *ngIf="endereco">
+        <tr class="thead-light">
+          <th>Rua</th>
+          <th>Numero</th>
+          <th>Complemento</th>
+          <th>Bairro</th>
+          <th>CEP</th>
+          <th>Cidade</th>
+          <th>Estado</th>
+          <th>Ações</th>
+        </tr>
+  
+        <tr *ngFor="let endereco of enderecos">
+          <td>{{ endereco.logradouro }}</td>
+          <td>{{ endereco.numero }}</td>
+          <td>{{ endereco.complemento }}</td>
+          <td>{{ endereco.bairro }}</td>
+          <td>{{ endereco.cep }}</td>
+          <td>{{ endereco.cidade }}</td>
+          <td>{{ endereco.estado }}</td>
+          <td>
+            <button type="button" class="btn btn-sm btn-outline-info" (click)="ExibirFormularioAtualizacao(endereco.EnderecoId)">
+              Atualizar</button
+            >|
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="ExibirConfirmacaoExclusao(endereco.EnderecoId, endereco.logradouro, conteudoModal)">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <div class="container p-5" *ngIf="visibilidadeFormulario">
+    <div class="row">
+      <div class="col-6 border boder-light rounded p-5 shadow" *ngIf="formulario">
+        <h6>{{ tituloFormulario }}</h6>
+        <hr />
+  
+        <form [formGroup]="formulario" (ngSubmit)="EnviarFormulario()">
+          <div class="form-group">
+            <label>Rua</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="logradouro"
+            />
+          </div>
+  
+          <div class="form-group">
+            <label>Numero</label>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              formControlName="numero"
+            />
+          </div>
+  
+          <div class="form-group">
+            <label>Complemento</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="complemento"
+            />
+          </div>
+  
+          <div class="form-group">
+            <label>Bairro</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="bairro"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>CEP</label>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              formControlName="cep"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Cidade</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="cidade"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Estado</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="estado"
+            />
+          </div>
+  
+          <div class="container">
+            <div class="row">
+              <div>
+                <button type="submit" class="btn btn-sm btn-outline-secondary">
+                  Salvar
+                </button>
+              </div>
+              <div class="pl-1">
+                <button type="button" class="btn btn-sm btn-light" (click)="Voltar()">Voltar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #conteudoModal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Confirmação de Exclusão</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Prosseguir com a exclusão do(a) {{logradouroEndereco}}
+      </div>
+  
+      <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modalRef.hide()">Não</button>
+          <button type="button" class="btn btn-outline-danger" (click)="ExcluirEndereco(enderecoId)">Sim</button>
+      </div>
+    </ng-template>
